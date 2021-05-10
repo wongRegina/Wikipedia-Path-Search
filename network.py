@@ -75,10 +75,14 @@ print("---")
 
 # iterative deepening depth first search
 def iddf(graph, source, target):
+    visited = []
     parent = {}
     depth = 0
+
+    visited.append(source)
+
     while True:
-        result = dls(graph, source, target, depth, parent)
+        result = dls(graph, source, target, depth, parent, visited)
         found = result[0]
         remaining = result[1]
         if found:
@@ -88,7 +92,7 @@ def iddf(graph, source, target):
         depth += 1
 
 # recursive depth-limited depth first search
-def dls(graph, source, target, depth, parent):
+def dls(graph, source, target, depth, parent, visited):
     if depth == 0:
         if G.nodes[source]["article"] == target:
             return (source, True)
@@ -97,8 +101,10 @@ def dls(graph, source, target, depth, parent):
     elif depth > 0:
         any_remaining = False
         for neighbor in list(graph.adj[source]):
-            parent[neighbor] = source
-            result = dls(graph, neighbor, target, depth-1, parent)
+            if neighbor not in visited:
+                parent[neighbor] = source
+                visited.append(neighbor)
+            result = dls(graph, neighbor, target, depth-1, parent, visited)
             found = result[0]
             remaining = result[1]
             if found:
@@ -107,10 +113,14 @@ def dls(graph, source, target, depth, parent):
                 any_remaining = True
         return (None, any_remaining)
 
-print(bfs(G, "Orca", "Kangaroo"))
-print(bfs(G, "14th_century", "Fire"))
-print(bfs(G, "Batman", "Jazz"))
-print(bfs(G, "Edgar_Allan_Poe", "Zebra"))
-print(bfs(G, "Achilles_tendon", "Ivory"))
-print(bfs(G, "Planet", "Jimmy_Wales"))
+print(iddf(G, "Orca", "Kangaroo"))
+print(iddf(G, "14th_century", "Fire"))
+print(iddf(G, "Batman", "Jazz"))
+print(iddf(G, "Edgar_Allan_Poe", "Zebra"))
+print(iddf(G, "Achilles_tendon", "Ivory"))
+print(iddf(G, "Planet", "Jimmy_Wales"))
 print("---")       
+
+# print(list(G.pred["Kangaroo"]))
+
+
