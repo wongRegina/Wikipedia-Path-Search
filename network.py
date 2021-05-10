@@ -2,6 +2,7 @@
 
 # Other sources used:
 # https://programminghistorian.org/en/lessons/exploring-and-analyzing-network-data-with-python#reading-files-importing-data
+# https://en.wikipedia.org/wiki/Breadth-first_search
 # https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search
 
 # Libraries used:
@@ -122,5 +123,3 @@ print(iddf(G, "Planet", "Jimmy_Wales"))
 print("---")       
 
 # print(list(G.pred["Kangaroo"]))
-
-
