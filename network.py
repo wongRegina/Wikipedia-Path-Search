@@ -23,7 +23,7 @@ with open(edge_path, 'r') as edgetsv: # Open the file
     edgereader = csv.reader(edgetsv, delimiter="\t") # Read the csv
     edges = [tuple(e) for e in edgereader][12:] # Retrieve the data
 
-G = nx.Graph()
+G = nx.DiGraph()
 for n in node_names:
     G.add_node(n, article=n)
 G.add_edges_from(edges)
@@ -60,6 +60,10 @@ def bfs(graph, source, target):
                 visited.append(neighbor)
                 queue.append(neighbor)
 
+print()
 print(bfs(G, "Orca", "Kangaroo"))
 print(bfs(G, "14th_century", "Fire"))
 print(bfs(G, "Batman", "Jazz"))
+print(bfs(G, "Edgar_Allan_Poe", "Zebra"))
+print(bfs(G, "Achilles_tendon", "Ivory"))
+print(bfs(G, "Planet", "Jimmy_Wales"))
