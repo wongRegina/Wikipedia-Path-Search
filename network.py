@@ -23,16 +23,43 @@ with open(edge_path, 'r') as edgetsv: # Open the file
     edgereader = csv.reader(edgetsv, delimiter="\t") # Read the csv
     edges = [tuple(e) for e in edgereader][12:] # Retrieve the data
 
-# print(len(node_names))
-# print(len(edges))
-# print(node_names[0])
-# print(edges[0])
-
 G = nx.Graph()
-G.add_nodes_from(node_names)
+for n in node_names:
+    G.add_node(n, article=n)
 G.add_edges_from(edges)
 
 print(nx.info(G))
 
 # print(list(G.adj["Orca"]))
-print(list(G.neighbors("Orca")))
+# print(G.nodes["Orca"])
+
+def backtrace(parent, start, end):
+    path = [end]
+    while path[-1] != start:
+        path.append(parent[path[-1]])
+    path.reverse()
+    return path
+
+def bfs(graph, source, target):
+    queue = []
+    visited = []
+    parent = {}
+
+    queue.append(source)
+    visited.append(source)
+
+    while queue:
+        vertex = queue.pop(0)
+
+        if G.nodes[vertex]["article"] == target:
+            return backtrace(parent, source, target)
+
+        for neighbor in list(graph.adj[vertex]):
+            if neighbor not in visited:
+                parent[neighbor] = vertex
+                visited.append(neighbor)
+                queue.append(neighbor)
+
+print(bfs(G, "Orca", "Kangaroo"))
+print(bfs(G, "14th_century", "Fire"))
+print(bfs(G, "Batman", "Jazz"))
