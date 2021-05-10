@@ -1,6 +1,9 @@
 # Data Source: https://snap.stanford.edu/data/wikispeedia.html
+
 # Other sources used:
 # https://programminghistorian.org/en/lessons/exploring-and-analyzing-network-data-with-python#reading-files-importing-data
+# https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search
+
 # Libraries used:
 # https://networkx.org/documentation/stable/tutorial.html
 
@@ -29,6 +32,7 @@ for n in node_names:
 G.add_edges_from(edges)
 
 print(nx.info(G))
+print()
 
 # print(list(G.adj["Orca"]))
 # print(G.nodes["Orca"])
@@ -40,6 +44,7 @@ def backtrace(parent, start, end):
     path.reverse()
     return path
 
+# breadth first search
 def bfs(graph, source, target):
     queue = []
     visited = []
@@ -60,10 +65,52 @@ def bfs(graph, source, target):
                 visited.append(neighbor)
                 queue.append(neighbor)
 
-print()
 print(bfs(G, "Orca", "Kangaroo"))
 print(bfs(G, "14th_century", "Fire"))
 print(bfs(G, "Batman", "Jazz"))
 print(bfs(G, "Edgar_Allan_Poe", "Zebra"))
 print(bfs(G, "Achilles_tendon", "Ivory"))
 print(bfs(G, "Planet", "Jimmy_Wales"))
+print("---")
+
+# iterative deepening depth first search
+def iddf(graph, source, target):
+    parent = {}
+    depth = 0
+    while True:
+        result = dls(graph, source, target, depth, parent)
+        found = result[0]
+        remaining = result[1]
+        if found:
+            return backtrace(parent, source, target)
+        elif not remaining:
+            return None
+        depth += 1
+
+# recursive depth-limited depth first search
+def dls(graph, source, target, depth, parent):
+    if depth == 0:
+        if G.nodes[source]["article"] == target:
+            return (source, True)
+        else:
+            return (None, True)
+    elif depth > 0:
+        any_remaining = False
+        for neighbor in list(graph.adj[source]):
+            parent[neighbor] = source
+            result = dls(graph, neighbor, target, depth-1, parent)
+            found = result[0]
+            remaining = result[1]
+            if found:
+                return (found, True)
+            if remaining:
+                any_remaining = True
+        return (None, any_remaining)
+
+print(bfs(G, "Orca", "Kangaroo"))
+print(bfs(G, "14th_century", "Fire"))
+print(bfs(G, "Batman", "Jazz"))
+print(bfs(G, "Edgar_Allan_Poe", "Zebra"))
+print(bfs(G, "Achilles_tendon", "Ivory"))
+print(bfs(G, "Planet", "Jimmy_Wales"))
+print("---")       
