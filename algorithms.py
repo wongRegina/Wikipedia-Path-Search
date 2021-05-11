@@ -65,9 +65,10 @@ def iddf(graph, source, target):
     visited.append(source)
 
     while True:
-        result = dls(graph, source, target, depth, parent, visited)
+        result = dls(graph, source, target, depth, parent, visited, 0)
         found = result[0]
         remaining = result[1]
+        expanded = result[2]
         if found:
             return backtrace(parent, source, target, expanded)
         elif not remaining:
@@ -75,8 +76,7 @@ def iddf(graph, source, target):
         depth += 1
 
 # recursive depth-limited depth first search
-def dls(graph, source, target, depth, parent, visited):
-    expanded = 0
+def dls(graph, source, target, depth, parent, visited, expanded):
     if depth == 0:
         if graph.nodes[source]["article"] == target:
             return (source, True, expanded)
@@ -89,7 +89,7 @@ def dls(graph, source, target, depth, parent, visited):
             if neighbor not in visited:
                 parent[neighbor] = source
                 visited.append(neighbor)
-            result = dls(graph, neighbor, target, depth-1, parent, visited)
+            result = dls(graph, neighbor, target, depth-1, parent, visited, expanded)
             found = result[0]
             remaining = result[1]
             if found:

@@ -78,7 +78,7 @@ def perform_algo():
         result, expanded = dfs(G, src, target,[], [])
         print('Path: ' + ' -> '.join(result))
     elif user_input == 'iddf':
-        result, expanded = bfs(G, src, target)
+        result, expanded = iddf(G, src, target)
         print('Path: ' + ' -> '.join(result))
     end = datetime.datetime.now()
 
