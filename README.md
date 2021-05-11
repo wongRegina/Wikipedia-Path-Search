@@ -1,10 +1,9 @@
 # Wikipedia Path Search
 
 The goal of this application is to find one of the shortest
-paths to get from one Wikipedia page to another Wikipedia pages.
-The path is determined by hyperlinks on the page. The program will return 
-one of the shortest paths where you start from one Wikipedia
-page and a way to click to the other Wikipedia page.
+paths to get from one Wikipedia page to another Wikipedia page.
+The edges are is determined by hyperlinks on the page. The application will return 
+one of the shortest paths using the specified algorithm.
 
 ## Requirements
 
