@@ -3,6 +3,10 @@
 # Other sources used:
 # https://programminghistorian.org/en/lessons/exploring-and-analyzing-network-data-with-python#reading-files-importing-data
 # https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search
+# http://planning.cs.uiuc.edu/node50.html
+# https://www.cs.cmu.edu/afs/cs/academic/class/15381-s07/www/slides/011807uninformed.pdf
+# https://en.wikipedia.org/wiki/Bidirectional_search
+# http://www.cs.cmu.edu/afs/andrew/course/15/381-f08/www/lectures/HandoutUninformedSearch.pdf
 
 # Libraries used:
 # https://networkx.org/documentation/stable/tutorial.html
