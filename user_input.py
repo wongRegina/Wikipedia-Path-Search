@@ -36,13 +36,17 @@ G.add_edges_from(edges)
 
 # divide the article names into groups of 10 for viewing purposes
 def list_of_articles():
-    list_of_10 = []
+    l = []
     total = []
+    count = 0
     for name in node_names:
-        for i in range(20):
-            list_of_10.append(name)
-        total.append(list_of_10)
-        list_of_10 = []
+        if count <= 20:
+            l.append(name)
+            count+=1
+        else:
+            total.append(l)
+            l = []
+            count = 0
     return total
 
 def present_articles(article_names,i):
