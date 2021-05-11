@@ -124,6 +124,7 @@ if __name__ == "__main__":
                 except ValueError:
                     if user_input=='c':
                         perform_algo()
+                        break
                     else:
                         sys.exit(0)
         elif user_input == 'c':
