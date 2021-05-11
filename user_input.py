@@ -12,6 +12,7 @@ from operator import itemgetter
 import networkx as nx
 from networkx.algorithms import community #This part of networkx, for community detection, needs to be imported separately.
 import datetime
+import sys
 from algorithms import bfs, dfs, iddf
 
 node_path = "./wikispeedia_paths-and-graph/articles.tsv"
@@ -38,7 +39,7 @@ def list_of_articles():
     list_of_10 = []
     total = []
     for name in node_names:
-        for i in range(10):
+        for i in range(20):
             list_of_10.append(name)
         total.append(list_of_10)
         list_of_10 = []
