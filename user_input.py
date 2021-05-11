@@ -70,7 +70,7 @@ def perform_algo():
     src = input('Enter the name of your source article: ')
     while src not in node_names:
         src = input('The article name does not exist. Please try again: ')
-    target = input('Enter the name of your source article: ')
+    target = input('Enter the name of your target article: ')
     while target not in node_names:
         target = input('The article name does not exist. Please try again:')
     
@@ -95,6 +95,8 @@ def perform_algo():
     elif user_input == 'bibfs':
         result, expanded = bidirectional_bfs(G, src, target)
         print('Path: ' + ' -> '.join(result))
+    else:
+        return
     
     end = datetime.datetime.now()
     mem_after = memory_usage_ps()
