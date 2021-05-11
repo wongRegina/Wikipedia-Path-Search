@@ -1,5 +1,3 @@
-import queue
-
 def backtrace(parent, start, end, expanded):
     path = [end]
     while path[-1] != start:
@@ -32,12 +30,12 @@ def bfs(graph, source, target):
 
 # depth first search
 def dfs(graph, source, target, explored, path):
-    frontier = queue.Queue()
-    frontier.put(source)
+    frontier = []
+    frontier.append(source)
     expanded = 0
 
     while frontier:
-        current = frontier.get() # pop
+        current = frontier.pop()
         if current in explored:
             continue
 
@@ -52,7 +50,7 @@ def dfs(graph, source, target, explored, path):
         expanded+=1
         for neighbor in list(graph.adj[current]):
             if neighbor not in explored:
-                frontier.put(neighbor)
+                frontier.append(neighbor)
     return [], expanded
 
 # iterative deepening depth first search
