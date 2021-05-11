@@ -12,7 +12,6 @@ import csv
 from operator import itemgetter
 import networkx as nx
 from networkx.algorithms import community #This part of networkx, for community detection, needs to be imported separately.
-from memory_profiler import memory_usage, profile
 
 node_path = "./wikispeedia_paths-and-graph/articles.tsv"
 edge_path = "./wikispeedia_paths-and-graph/links.tsv"
@@ -75,7 +74,6 @@ print(bfs(G, "Achilles_tendon", "Ivory"))
 print(bfs(G, "Planet", "Jimmy_Wales"))
 print("---")
 
-@profile
 # iterative deepening depth first search
 def iddf(graph, source, target):
     visited = []
@@ -94,7 +92,6 @@ def iddf(graph, source, target):
             return None
         depth += 1
 
-@profile
 # recursive depth-limited depth first search
 def dls(graph, source, target, depth, parent, visited):
     if depth == 0:
@@ -118,11 +115,11 @@ def dls(graph, source, target, depth, parent, visited):
         return (None, any_remaining)
 
 print(iddf(G, "Orca", "Kangaroo"))
-""" print(iddf(G, "14th_century", "Fire"))
+print(iddf(G, "14th_century", "Fire"))
 print(iddf(G, "Batman", "Jazz"))
 print(iddf(G, "Edgar_Allan_Poe", "Zebra"))
 print(iddf(G, "Achilles_tendon", "Ivory"))
 print(iddf(G, "Planet", "Jimmy_Wales"))
-print("---")    """    
+print("---")
 
 # print(list(G.pred["Kangaroo"]))

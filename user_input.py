@@ -18,6 +18,8 @@ from networkx.algorithms import community #This part of networkx, for community 
 import datetime
 import sys
 from algorithms import bfs, dfs, iddf, bidirectional_bfs
+import psutil
+import os
 
 node_path = "./wikispeedia_paths-and-graph/articles.tsv"
 edge_path = "./wikispeedia_paths-and-graph/links.tsv"
@@ -37,6 +39,11 @@ G = nx.DiGraph()
 for n in node_names:
     G.add_node(n, article=n)
 G.add_edges_from(edges)
+
+def memory_usage_ps():
+    process = psutil.Process(os.getpid())
+    mem = process.memory_info()
+    return mem.rss
 
 # divide the article names into groups of 10 for viewing purposes
 def list_of_articles():
@@ -75,6 +82,7 @@ def perform_algo():
     
     user_input = input('>>').lower()
     start = datetime.datetime.now()
+    mem_before = memory_usage_ps()
     if user_input=='bfs':
         result, expanded = bfs(G, src, target)
         print('Path: ' + ' -> '.join(result))
@@ -87,12 +95,13 @@ def perform_algo():
     elif user_input == 'bibfs':
         result, expanded = bidirectional_bfs(G, src, target)
         print('Path: ' + ' -> '.join(result))
-
+    
     end = datetime.datetime.now()
-
+    mem_after = memory_usage_ps()
     time = (end - start).total_seconds()*1000
     print('Time (ms): ' + str(time))
     print('Nodes Expanded: ' + str(expanded))
+    print('Memory Usage: %d bytes' %(mem_after - mem_before))
 
 
 if __name__ == "__main__":
