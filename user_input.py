@@ -76,7 +76,7 @@ def perform_algo():
     
     print('\nPlease choose one of the following for Algorithms: ')
     print('\t\'bfs\' for Breadth First Search')
-    print('\t\'bibfs\' for Iterative Deepening Depth First Search')
+    print('\t\'bibfs\' for BiDirectional Breadth First Search')
     print('\t\'dfs\' for Depth First Search (note that it does not guarantee the shortest path)')
     print('\t\'iddf\' for Iterative Deepening Depth First Search')
     
