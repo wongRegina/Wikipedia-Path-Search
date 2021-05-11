@@ -17,7 +17,7 @@ import networkx as nx
 from networkx.algorithms import community #This part of networkx, for community detection, needs to be imported separately.
 import datetime
 import sys
-from algorithms import bfs, dfs, iddf
+from algorithms import bfs, dfs, iddf, bidirectional_bfs
 
 node_path = "./wikispeedia_paths-and-graph/articles.tsv"
 edge_path = "./wikispeedia_paths-and-graph/links.tsv"
@@ -67,9 +67,9 @@ def perform_algo():
     while target not in node_names:
         target = input('The article name does not exist. Please try again:')
     
-    print(nx.info(G))
     print('\nPlease choose one of the following for Algorithms: ')
     print('\t\'bfs\' for Breadth First Search')
+    print('\t\'bibfs\' for Iterative Deepening Depth First Search')
     print('\t\'dfs\' for Depth First Search (note that it does not guarantee the shortest path)')
     print('\t\'iddf\' for Iterative Deepening Depth First Search')
     
@@ -84,6 +84,10 @@ def perform_algo():
     elif user_input == 'iddf':
         result, expanded = iddf(G, src, target)
         print('Path: ' + ' -> '.join(result))
+    elif user_input == 'bibfs':
+        result, expanded = bidirectional_bfs(G, src, target)
+        print('Path: ' + ' -> '.join(result))
+
     end = datetime.datetime.now()
 
     time = (end - start).total_seconds()*1000
@@ -98,22 +102,28 @@ if __name__ == "__main__":
     print('\t\'a\' if you would like to see a list of articles to choose from.')
     print('\t\'c\' if you would like to enter the article name on your own.')
     print('\tanything else if you would like to end this session.')
-    user_input = input('>>').lower()
-    if user_input =='a':
-        user_input = present_articles(article_names,0)
-        while True:
-            try:
-                num = int(user_input)
-                user_input = present_articles(article_names, num-1)
-            except ValueError:
-                if user_input=='c':
-                    perform_algo()
-                else:
-                    sys.exit(0)
-    elif user_input == 'c':
-        perform_algo()
-    else:
-        sys.exit(0)
+    while True:
+        user_input = input('>>').lower()
+        if user_input =='a':
+            user_input = present_articles(article_names,0)
+            while True:
+                try:
+                    num = int(user_input)
+                    user_input = present_articles(article_names, num-1)
+                except ValueError:
+                    if user_input=='c':
+                        perform_algo()
+                    else:
+                        sys.exit(0)
+        elif user_input == 'c':
+            perform_algo()
+        else:
+            sys.exit(0)
+
+        print('\nEnter: ')
+        print('\t\'a\' if you would like to see a list of articles to choose from.')
+        print('\t\'c\' if you would like to enter the article name on your own.')
+        print('\tanything else if you would like to end this session.')
         
         
     

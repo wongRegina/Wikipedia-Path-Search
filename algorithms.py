@@ -44,7 +44,6 @@ def dfs(graph, source, target, explored, path):
         if graph.nodes[current]["article"] == target:
             path.append(current)
             explored.append(current)
-            print(path)
             return path, expanded
         
         explored.append(current)
@@ -98,7 +97,7 @@ def dls(graph, source, target, depth, parent, visited, expanded):
                 any_remaining = True
         return (None, any_remaining, expanded)
   
-def bidirectional_backtrace(intersecting_node, start_parent, end_parent, source, target):
+def bidirectional_backtrace(intersecting_node, start_parent, end_parent, source, target, expanded):
     path = []
     path.append(intersecting_node)
     ptr = intersecting_node
@@ -114,7 +113,7 @@ def bidirectional_backtrace(intersecting_node, start_parent, end_parent, source,
         path.append(end_parent[ptr])
         ptr = end_parent[ptr]
 
-    return path
+    return path, expanded
 
 def bidirectional_bfs(graph, source, target):
     start_queue = []
@@ -125,6 +124,7 @@ def bidirectional_bfs(graph, source, target):
     end_visited = []
     end_parent = {}
 
+    expanded = 0
     start_queue.append(source)
     start_visited.append(source)
 
@@ -135,17 +135,18 @@ def bidirectional_bfs(graph, source, target):
         vertex1 = start_queue.pop(0)
         vertex2 = end_queue.pop(0)
 
-        if G.nodes[vertex1]["article"] == target or vertex1 in end_queue:
-            return bidirectional_backtrace(vertex1, start_parent, end_parent, source, target)
+        if graph.nodes[vertex1]["article"] == target or vertex1 in end_queue:
+            return bidirectional_backtrace(vertex1, start_parent, end_parent, source, target, expanded)
 
+        expanded += 1
         for neighbor in list(graph.adj[vertex1]):
             if neighbor not in start_visited:
                 start_parent[neighbor] = vertex1
                 start_visited.append(neighbor)
                 start_queue.append(neighbor)
         
-        if G.nodes[vertex2]["article"] == source or vertex2 in start_queue:
-            return bidirectional_backtrace(vertex2, start_parent, end_parent, source, target)
+        if graph.nodes[vertex2]["article"] == source or vertex2 in start_queue:
+            return bidirectional_backtrace(vertex2, start_parent, end_parent, source, target, expanded)
 
         for parent in list(graph.pred[vertex2]):
             if parent not in end_visited:
