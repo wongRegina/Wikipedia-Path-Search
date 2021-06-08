@@ -51,7 +51,7 @@ Once you enter a valid article, it would prompt you to enter a target article.
 Once a valid article is enter it would ask for the algorithm to run
 
     'bfs' for Breadth First Search
-    'bibfs' for Iterative Deepening Depth First Search
+    'bibfs' for Bidirectional Breadth First Search
     'dfs' for Depth First Search (note that it does not guarantee the shortest path)
     'iddf' for Iterative Deepening Depth First Search
 
